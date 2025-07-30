@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     year: "numeric",
   });
 
-  //* VAR: compnay name as dynamic variable
+  //* VAR: company name as dynamic variable
   const companyName: string = "KONOHA PROJECT";
 
   return (
