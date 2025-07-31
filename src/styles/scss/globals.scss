@@ -19,6 +19,24 @@
   animation: fade-in 700ms ease;
 }
 
+//* Scroll reveal animation
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-on-scroll.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    transition: none;
+  }
+}
+
 //* Blog Post Article
 .d-flex-center__container {
   padding: 0 1rem;

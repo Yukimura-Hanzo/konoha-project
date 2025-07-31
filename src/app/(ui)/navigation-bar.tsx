@@ -21,7 +21,6 @@ const NavigationBar: React.FC = () => {
     document.startViewTransition(() => router.push(path));
   };
 
-
   //* State to track if menu is open (used for mobile or responsive nav toggling)
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
