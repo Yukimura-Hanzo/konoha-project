@@ -45,7 +45,6 @@ export default function RootLayout({
       >
         <NavigationBar />
         <div style={{ viewTransitionName: "page" }}>
-
           {children}
           <Footer />
         </div>
