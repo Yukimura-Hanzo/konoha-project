@@ -1,3 +1,24 @@
+//* Page transitions
+@view-transition {
+  navigation: auto;
+}
+
+@keyframes fade-in {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+@keyframes fade-out {
+  from { opacity: 1 }
+  to { opacity: 0 }
+}
+
+::view-transition-old(page) {
+  animation: fade-out 700ms ease;
+}
+::view-transition-new(page) {
+  animation: fade-in 700ms ease;
+}
+
 //* Blog Post Article
 .d-flex-center__container {
   padding: 0 1rem;

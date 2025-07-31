@@ -3,10 +3,24 @@
 //? REACT
 import React, { useEffect, useState } from "react";
 //? NEXT
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
 const NavigationBar: React.FC = () => {
+
+  //* Define next router
+  const router = useRouter();
+
+  //* Handle page transition animation
+  const handleRouteChange = (path: string) => {
+    if (!document.startViewTransition) {
+      router.push(path);
+      return;
+    }
+    document.startViewTransition(() => router.push(path));
+  };
+
 
   //* State to track if menu is open (used for mobile or responsive nav toggling)
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -59,7 +73,16 @@ const NavigationBar: React.FC = () => {
       {/* Unified Navbar */}
       <div className="flex items-center justify-between px-4 py-3 sm:py-4">
         {/* Logo */}
-        <Link href="/" aria-label="Homepage">
+        <Link
+          onClick={(e) => {
+            e.preventDefault();
+            if (!document.startViewTransition) {
+              router.push("/");
+            } else {
+              document.startViewTransition(() => router.push("/"));
+            }
+          }}
+          href="/" aria-label="Homepage">
           <Image
             src="/next.svg"
             alt="Company Logo"
@@ -75,6 +98,11 @@ const NavigationBar: React.FC = () => {
             <Link
               key={item}
               href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRouteChange(item === "Home" ? "/" : `/${item.toLowerCase()}`);
+                setIsMenuOpen(false); // for mobile menu
+              }}
               className="relative group hover:text-blue-600 transition-colors"
             >
               {item}
@@ -122,7 +150,11 @@ const NavigationBar: React.FC = () => {
               key={item}
               href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
               className="py-2 border-b hover:text-blue-600"
-              onClick={() => setIsMenuOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleRouteChange(item === "Home" ? "/" : `/${item.toLowerCase()}`);
+                setIsMenuOpen(false); // for mobile menu
+              }}
             >
               {item}
             </Link>
