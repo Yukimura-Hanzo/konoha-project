@@ -60,11 +60,11 @@ const NavigationBar: React.FC = () => {
           <span className="flex items-center gap-1">Made w/ TurboPack</span>
         </div>
         <div className="flex gap-4 items-center">
-          <Link href="#" className="hover:underline">
+          <Link href="/faq" className="hover:underline">
             FAQs
           </Link>
           <span className="h-4 border-l border-gray-400" />
-          <Link href="#" className="hover:underline">
+          <Link href="/privacy-policy" className="hover:underline">
             <span className="flex items-center gap-1">Privacy Policy</span>
           </Link>
         </div>

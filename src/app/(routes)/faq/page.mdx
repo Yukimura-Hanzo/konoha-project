@@ -1,0 +1,37 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+# Frequently Asked Questions
+
+We’ve grouped the most common questions about the **dashboard tools** below.
+
+---
+
+# Dashboard: Productivity & Finance Tools
+
+<Accordion type="multiple" className="w-full">
+  <AccordionItem value="dash-1">
+    <AccordionTrigger>What tools are available in the dashboard?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-2 text-balance">
+      The dashboard includes a to-do list for managing tasks and a budget planner to track your income, expenses, and savings.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="dash-2">
+    <AccordionTrigger>How do I add a new task to my to-do list?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-2 text-balance">
+      Navigate to the To-Do List section in the dashboard. Click “Add Task”, enter the task name and due date, then hit Save.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="dash-3">
+    <AccordionTrigger>Is my budget data private?</AccordionTrigger>
+    <AccordionContent className="flex flex-col gap-2 text-balance">
+      Absolutely. All financial and task data is stored securely and only visible to you.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
