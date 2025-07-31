@@ -43,8 +43,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NavigationBar />
         <div style={{ viewTransitionName: "page" }}>
-          <NavigationBar />
+
           {children}
           <Footer />
         </div>
