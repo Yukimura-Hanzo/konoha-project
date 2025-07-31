@@ -74,7 +74,7 @@ const NavigationBar: React.FC = () => {
           {navItems.map((item) => (
             <Link
               key={item}
-              href={`/${item.toLowerCase()}`}
+              href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
               className="relative group hover:text-blue-600 transition-colors"
             >
               {item}
@@ -120,7 +120,7 @@ const NavigationBar: React.FC = () => {
           {navItems.map((item) => (
             <Link
               key={item}
-              href={`/${item.toLowerCase()}`}
+              href={item === "Home" ? "/" : `/${item.toLowerCase()}`}
               className="py-2 border-b hover:text-blue-600"
               onClick={() => setIsMenuOpen(false)}
             >
