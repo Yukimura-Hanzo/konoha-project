@@ -50,7 +50,7 @@ const NavigationBar: React.FC = () => {
   }, []);
 
   //* TS Types
-  const navItems: string[] = ["Home", "Blogs", "About", "Contact"];
+  const navItems: string[] = ["Home", "Blogs", "Login"];
 
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur bg-white/30 shadow-md transition-all duration-300">

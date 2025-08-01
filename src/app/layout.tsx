@@ -7,9 +7,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 //? STYLESHEET
 import "@/styles/css/globals.css";
 import "@/styles/scss/globals.scss";
-//? UI
-import NavigationBar from "./(ui)/navigation-bar";
-import Footer from "./(ui)/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,14 +47,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Navigation bar */}
-        <NavigationBar />
         {/* Index layout */}
-        <div style={{ viewTransitionName: "page" }}>
-          {children}
-          {/* Footer */}
-          <Footer />
-        </div>
+        {children}
         {/* Next.js Analytics & Insights */}
         <SpeedInsights/>
         <Analytics />
