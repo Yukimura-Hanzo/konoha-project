@@ -1,5 +1,5 @@
 //? REACT
-import React, { JSX } from "react";
+import React, { JSX, Suspense, cache } from "react";
 //? NEXT
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
@@ -12,6 +12,10 @@ import matter from "gray-matter";
 import { VscCalendar } from "react-icons/vsc";
 //? UI
 import Breadcrumbs from "@/app/(ui)/breadcrumbs";
+import ViewCounter from "@/app/(ui)/view-counter";
+//? DB QUERIES
+import { getViewsCount } from "@/app/(neon)/db/queries";
+import { increment } from "@/app/(neon)/db/actions";
 
 //? TS Types
 type Props = {
@@ -138,13 +142,18 @@ export default async function BlogPostPage({
               className="w-full h-auto border-[3px] border-black rounded-[15px] mb-6"
             />
           )}
-          <div className="flex flex-col md:flex-row md:justify-between items-start text-sm text-gray-600 mb-6">
+          <div className="flex md:flex-row justify-between items-start text-sm text-gray-600 mb-6 mx-3">
             {/* Meta info: date */}
             <time dateTime={data.publishedAt} className="flex items-center gap-2 mb-2 md:mb-0">
               <VscCalendar className="w-4 h-4" />
               <span className="hidden md:inline">Published on</span>
               <span>{formateDate(data.publishedAt)}</span>
             </time>
+            {/* JSX code with 'Suspense' for lazy loading the 'Views' component */}
+            <Suspense fallback={<span>Loading...</span>}>
+              {/* Render 'Views' component w/ specified 'slug' */}
+              <Views slug={data.fullSlug} />
+            </Suspense>
           </div>
           {/* Post content */}
           <Post />
@@ -152,4 +161,20 @@ export default async function BlogPostPage({
       </div>
     </div>
   );
+}
+
+//? Create a cached version of the 'increment' function
+const incrementViews = cache(increment);
+
+//? Define asynchronous function named 'Views'
+async function Views({ slug }: { slug: string }) {
+
+  //* Fetch the current view counts for the specified blog post using 'getViewsCount'.
+  const views = await getViewsCount();
+
+  //* Increment the views count using the cached 'increment' function.
+  incrementViews(slug);
+
+  //? Return the 'ViewCounter' component with the fetched view counts and provided 'slug'.
+  return <ViewCounter allViews={views} slug={slug} />;
 }

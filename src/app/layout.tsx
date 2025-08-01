@@ -1,7 +1,13 @@
+//? NEXT
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
+//? GOOGLE FONTS
 import { Geist, Geist_Mono } from "next/font/google";
+//? STYLESHEET
 import "@/styles/css/globals.css";
 import "@/styles/scss/globals.scss";
+//? UI
 import NavigationBar from "./(ui)/navigation-bar";
 import Footer from "./(ui)/footer";
 
@@ -15,7 +21,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-//? MetaData | Next.js
+//? METADATA
 export const metadata: Metadata = {
   metadataBase: new URL("http://localhost:3000"),
   title: {
@@ -33,6 +39,7 @@ export const metadata: Metadata = {
   },
 };
 
+//? GLOBAL LAYOUT
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,11 +50,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        {/* Navigation bar */}
         <NavigationBar />
+        {/* Index layout */}
         <div style={{ viewTransitionName: "page" }}>
           {children}
+          {/* Footer */}
           <Footer />
         </div>
+        {/* Next.js Analytics & Insights */}
+        <SpeedInsights/>
+        <Analytics />
       </body>
     </html>
   );
