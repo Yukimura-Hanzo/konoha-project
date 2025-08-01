@@ -1,5 +1,5 @@
 //? REACT
-import React, { JSX } from "react";
+import React, { JSX, Suspense } from "react";
 //? NEXT
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -12,6 +12,9 @@ import { VscCalendar } from "react-icons/vsc";
 import { getAllPosts } from "@/lib/post";
 //? UI
 import Breadcrumbs from "@/app/(ui)/breadcrumbs";
+import ViewCounter from "@/app/(ui)/view-counter";
+//? DB QUERIES
+import { getViewsCount } from "@/app/(neon)/db/queries";
 
 //? METADATA TAGS | [S.E.O]
 export const metadata: Metadata = {
@@ -80,6 +83,11 @@ export default function BlogsPage(): JSX.Element {
                     <VscCalendar className="w-4 h-4 text-gray-500" />
                     {format(new Date(post.publishedAt), "LLLL d, yyyy")}
                   </div>
+                  {/* JSX code w/ 'Suspense' for lazy loading the 'Views' component */}
+                  <Suspense fallback={<span>Loading...</span>}>
+                    {/* Render the 'Views' component with the specified 'slug' */}
+                    <Views slug={post.fullSlug} />
+                  </Suspense>
                 </div>
               </time>
               {/* Post description */}
@@ -91,3 +99,19 @@ export default function BlogsPage(): JSX.Element {
     </div>
   );
 }
+
+//? Define an asynchronous function named 'Views'
+async function Views({ slug }: { slug: string }) {
+
+  //? Fetch the current view counts for the specific blog post using 'getViewsCount()'
+  const views = await getViewsCount();
+
+  //* Return JSX structure for rendering the view counter
+  return (
+    <div>
+      {/* Render 'ViewCounter' component w/ fetched view counts and provided 'slug' */}
+      <ViewCounter allViews={views} slug={slug} />
+    </div>
+  );
+}
+
