@@ -3,6 +3,7 @@ import React, { Suspense } from "react";
 //? UI
 import ProfileWidget from "@/app/(ui)/dashboard/profile-widget";
 import { ProfileWidgetSkeleton } from "@/app/(ui)/dashboard/skeleton";
+import TodosApp from "./components/todo-app";
 
 export default function DashboardOverview() {
   return (
@@ -10,6 +11,7 @@ export default function DashboardOverview() {
       <Suspense fallback={<ProfileWidgetSkeleton />}>
         <ProfileWidget />
       </Suspense>
+      <TodosApp />
     </div>
   );
 }

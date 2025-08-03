@@ -37,6 +37,7 @@ export default async function UserAvatar() {
 
   //? Check console for Object data from GitHub API
   // console.log(JSON.stringify(session, null, 2));
+  // console.log(session.user.id);
 
   return (
     <SessionProvider session={session}>
