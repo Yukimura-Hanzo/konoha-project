@@ -3,7 +3,7 @@
 //? REACT
 import React, { useEffect, useState } from "react";
 //? DB QUERIES
-import { getTodos, addTodo, toggleTodo, deleteTodo } from "@/app/(neon)/db/todo";
+import { getTodos, addTodo, toggleTodo, deleteTodo, editTodo } from "@/app/(neon)/db/todo";
 //? UI
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -51,6 +51,10 @@ export default function TodosApp() {
   const [title, setTitle] = useState("");
   //* State to store the description input for a new todo
   const [description, setDescription] = useState("");
+  //* State to store the edited title
+  const [editTitle, setEditTitle] = useState("");
+  //* State to store the edited description
+  const [editDescription, setEditDescription] = useState("");
   //* State to store the total XP earned from completed todos
   const [totalXp, setTotalXp] = useState<number>(0);
   //* State to store the progress percentage toward the next level
@@ -115,6 +119,7 @@ export default function TodosApp() {
     //* Reloads todos to reflect the new addition
     setDescription("");
     await loadTodos();
+    toast.success("✅ Added task successfully.");
   };
 
   //? Async function to toggle a todo's completion status
@@ -123,6 +128,7 @@ export default function TodosApp() {
     await toggleTodo(id, !completed);
     //* Reloads todos to reflect the updated status
     await loadTodos();
+    // toast.success("✅ Task completed.");
   };
 
   //? Async function to delete a todo
@@ -131,6 +137,16 @@ export default function TodosApp() {
     await deleteTodo(id);
     //* Reloads todos to reflect the deletion
     await loadTodos();
+    toast.warning("✅ Task removed successfully.");
+  };
+
+  //? Async function to edit a todo
+  const handleEdit = async () => {
+    if (selectedTodoId === null) return;
+    await editTodo(selectedTodoId, editTitle, editDescription);
+    setSelectedTodoId(null);
+    await loadTodos();
+    toast.success("✅ Task updated successfully.");
   };
 
   //* Finds the specific todo based on the selectedTodoId for displaying details
@@ -285,7 +301,15 @@ export default function TodosApp() {
                 <Dialog>
                   <form>
                     <DialogTrigger asChild>
-                    <Button variant="ghost" onClick={() => setSelectedTodoId(todo.id)} className="h-8 w-8 p-0">
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        setSelectedTodoId(todo.id);
+                        setEditTitle(todo.title);
+                        setEditDescription(todo.description ?? "");
+                      }} 
+                      className="h-8 w-8 p-0"
+                    >
                       <span className="sr-only">Open menu</span>
                       <MoreHorizontal />
                     </Button>
@@ -308,8 +332,8 @@ export default function TodosApp() {
                             <Input
                               type="text"
                               placeholder={specificTodo.title}
-                              value={specificTodo.title}
-                              onChange={(e) => setTitle(e.target.value)}
+                              value={editTitle}
+                              onChange={(e) => setEditTitle(e.target.value)}
                               className="text-muted-foreground border rounded p-2"
                             />
                           </div>
@@ -317,8 +341,8 @@ export default function TodosApp() {
                             <Label htmlFor={`${specificTodo.id}`}>Description</Label>
                             <Textarea
                               placeholder={specificTodo.description}
-                              value={specificTodo.description?.trim() ? specificTodo.description : 'n/a'}
-                              onChange={(e) => setDescription(e.target.value)}
+                              value={editDescription}
+                              onChange={(e) => setEditDescription(e.target.value)}
                               className="text-muted-foreground border rounded p-2"
                             />
                           </div>
@@ -349,6 +373,11 @@ export default function TodosApp() {
                       <DialogFooter>
                         <DialogClose asChild>
                           <Button variant="outline">Cancel</Button>
+                        </DialogClose>
+                        <DialogClose asChild>
+                          <Button onClick={handleEdit} className="w-full">
+                            Save Changes
+                          </Button>
                         </DialogClose>
                       </DialogFooter>
                     </DialogContent>

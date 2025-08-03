@@ -78,3 +78,22 @@ export async function deleteTodo(id: number) {
     DELETE FROM todos WHERE id = ${id}
   `;
 }
+
+//? Defines an asynchronous function to edit the title and/or description of a to-do item
+export async function editTodo(id: number, title: string, description: string = "") {
+  //* Retrieves the current user's session
+  const session = await auth();
+  //* Extracts user ID from session object
+  const userId = session?.user?.id;
+  //* If no user is logged in, exit early
+  if (!userId) return;
+
+  //* Update the todo where both the id and user_id match
+  await sql`
+    UPDATE todos
+    SET title = ${title},
+        description = ${description},
+        updated_at = NOW()
+    WHERE id = ${id} AND user_id = ${userId}
+  `;
+}

@@ -4,6 +4,7 @@ import type { Session } from "next-auth";
 //? SHADCN
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/app/(ui)/dashboard/app-sidebar";
+import { Toaster } from "@/components/ui/sonner";
 
 export default async function DashboardLayout({
   children,
@@ -31,6 +32,7 @@ export default async function DashboardLayout({
           borderRadius: '50%',
         }} />
       </main>
+      <Toaster richColors />
     </SidebarProvider>
   );
 }
