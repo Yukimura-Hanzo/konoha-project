@@ -12,6 +12,7 @@ export interface BudgetItem {
   amount: number;
   type: "income" | "expense";
   created_at: string;
+  updated_at: string;
 }
 
 export async function getBudgetItems(): Promise<BudgetItem[]> {
@@ -23,7 +24,7 @@ export async function getBudgetItems(): Promise<BudgetItem[]> {
   if (!userId) return [];
   //* Execute SQL query to fetch all budget items for user, most recent first
   const rows = await sql`
-    SELECT id, title, amount, type, created_at
+    SELECT id, title, amount, type, created_at, updated_at
     FROM budget_items
     WHERE user_id = ${userId}
     ORDER BY created_at DESC
