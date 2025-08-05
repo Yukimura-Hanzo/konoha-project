@@ -4,16 +4,8 @@
 import { sql } from "@/lib/db";
 //? AUTH (assumed next-auth or custom session handler)
 import { auth } from "@/auth";
-
-//? TypeScript Interface for Budget Items
-export interface BudgetItem {
-  id: number;
-  title: string;
-  amount: number;
-  type: "income" | "expense";
-  created_at: string;
-  updated_at: string;
-}
+//? TS
+import { BudgetItem } from "./definitions";
 
 export async function getBudgetItems(): Promise<BudgetItem[]> {
   //* Retrieve session info for the currently logged-in user

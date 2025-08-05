@@ -4,20 +4,11 @@
 import { sql } from "@/lib/db";
 //? AUTH
 import { auth } from "@/auth";
-
 //? TS
-interface Todo {
-  id: number;
-  title: string;
-  description?: string;
-  completed: boolean;
-  xp: number;
-  created_at: string;
-  completed_at?: string;
-}
+import { TodoItem } from "./definitions";
 
 //? Defines an asynchronous function named `getTodos` that retrieves a user's to-do items
-export async function getTodos(): Promise<Todo[]> {
+export async function getTodos(): Promise<TodoItem[]> {
   //* Calls the `auth` function to get current user's session
   const session = await auth();
   //* Extracts user ID from session object w/ optional chaining to handle cases
@@ -31,7 +22,7 @@ export async function getTodos(): Promise<Todo[]> {
     SELECT * FROM todos WHERE user_id = ${userId} ORDER BY created_at DESC
   `;
   //* Returns query result, which contains the user's to-do items
-  return rows as Todo[];
+  return rows as TodoItem[];
 }
 
 //? Defines an asynchronous function named `addTodo` to create a new to-do item
