@@ -3,7 +3,7 @@
 //? REACT
 import React, { useEffect, useState, FormEvent } from "react";
 //? DB QUERIES
-import { BudgetItem, getBudgetItems, addBudgetItem, deleteBudgetItem, editBudgetItem } from "@/app/(neon)/db/budget";
+import { getBudgetItems, addBudgetItem, deleteBudgetItem, editBudgetItem } from "@/app/(neon)/db/budget";
 //? SHADCN
 import {
   Dialog,
@@ -31,6 +31,16 @@ import { toast } from "sonner";
 import { ChartRadialBudget } from "./finance-flowchart";
 //? ICONS
 import { HiMiniArrowTrendingUp, HiArrowTrendingDown } from "react-icons/hi2";
+
+//? TS
+type BudgetItem = {
+  id: number;
+  title: string;
+  amount: number;
+  type: "income" | "expense";
+  created_at: string;
+  updated_at: string;
+}
 
 export default function BudgetApp() {
   //* Store all budget entries
@@ -251,7 +261,7 @@ export default function BudgetApp() {
       <div className="mx-2">
         {items.map((item) => (
           <div key={item.id} className="flex justify-between">
-            <div className="flex flex-col mb-3">
+            <div className="flex-col mb-3">
               <Dialog>
                 <form>
                   <DialogTrigger asChild>
@@ -306,22 +316,24 @@ export default function BudgetApp() {
                       value={editAmount  || ""}
                       onChange={(e) => setEditAmount(e.target.value)}
                     />
-                    <DialogFooter>
-                      <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                      </DialogClose>
-                      <DialogClose asChild>
-                        <Button onClick={handleEdit} type="submit">Save changes</Button>
+                    <DialogFooter className="flex-row">
+                      <DialogClose >
+                        <Button className="block" variant="outline">Cancel</Button>
                       </DialogClose>
                       <DialogClose asChild>
                         <Button
                           variant="destructive"
                           onClick={() => handleDelete(item.id)}
-                          className="mt-3 w-full"
+                          className="block"
                         >
                           Delete
                         </Button>
                       </DialogClose>
+
+                      <DialogClose asChild>
+                        <Button className="block" onClick={handleEdit} type="submit">Save changes</Button>
+                      </DialogClose>
+
                     </DialogFooter>
                   </DialogContent>
                 </form>
