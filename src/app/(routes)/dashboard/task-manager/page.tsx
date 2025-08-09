@@ -1,8 +1,6 @@
 "use client";
 
-//? SHADCN
-import { toast } from "sonner";
-//? components
+//? UI
 import CreateForm from "./components/create-form";
 import LevelProgressBar from "./components/level-progress-bar";
 import StatsCard from "./components/stats-card";
@@ -12,14 +10,10 @@ import { MdOutlineTaskAlt } from "react-icons/md";
 import { HiClipboardList } from "react-icons/hi";
 import { SiOpslevel } from "react-icons/si";
 //? CONTEXT
-import { useTodoContext, TodoProvider } from "./context/todo-context";
+import { useTodoContext } from "./context/todo-context";
 
 export default function TaskManagerAppPage() {
-  return (
-    <TodoProvider>
-      <TaskManagerAppContent />
-    </TodoProvider>
-  );
+  return (<TaskManagerAppContent />);
 }
 
 function TaskManagerAppContent() {
